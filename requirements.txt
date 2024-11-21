@@ -5,4 +5,3 @@ Pillow==10.0.0
 pymongo==4.5.0
 spacy==3.7.0
 nltk==3.8.1
-gensim==4.2.0
