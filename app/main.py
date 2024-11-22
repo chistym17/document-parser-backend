@@ -1,38 +1,29 @@
-from flask import Flask, jsonify
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
-from pymongo.errors import ServerSelectionTimeoutError
+from app.services import text_analysis, text_extraction, text_categorization
 
-app = Flask(__name__)
+app = FastAPI()
 
-# MongoDB connection with error handling
-try:
-    client = MongoClient('mongodb://localhost:27017/', serverSelectionTimeoutMS=5000)
-    # Verify connection by sending a ping
-    client.admin.command('ping')
-    db = client['document']
-    print("Successfully connected to MongoDB!")
-except ServerSelectionTimeoutError as e:
-    print(f"Failed to connect to MongoDB: {e}")
-    
-@app.route("/db-test")
-def test_connection():
-    try:
-        # Test the connection by listing all collections
-        collections = db.list_collection_names()
-        return jsonify({
-            "status": "success",
-            "message": "Connected to MongoDB!",
-            "collections": list(collections)
-        })
-    except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": f"Database error: {str(e)}"
-        }), 500
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"],  
+)
 
-@app.route("/")
+client = MongoClient('mongodb://localhost:27017/', serverSelectionTimeoutMS=5000)
+db = client['document']
+
+app.include_router(text_analysis.router, prefix="/api/analysis", tags=["analysis"])
+app.include_router(text_extraction.router, prefix="/api/extraction", tags=["extraction"])
+app.include_router(text_categorization.router, prefix="/api/categorization", tags=["categorization"])
+
+@app.get("/")
 def home():
-    return "Welcome to the Backend Server!"
+    return {"message": "Welcome to the Backend Server!"}
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=5000)
