@@ -15,3 +15,5 @@ async def analyze_text(request: TextRequest):
     entities = [{"text": ent.text, "label": ent.label_} for ent in doc.ents]
     
     return {"keywords": keywords, "entities": entities}
+
+
