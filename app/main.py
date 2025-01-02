@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],  
 )
 
-client = MongoClient('mongodb://localhost:27017/', serverSelectionTimeoutMS=5000)
+client = MongoClient('mongodb://localhost:27017/')
 db = client['document']
 
 app.include_router(text_analysis.router, prefix="/api/analysis", tags=["analysis"])
