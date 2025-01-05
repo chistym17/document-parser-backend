@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
-from app.services import text_analysis, text_extraction, text_categorization,text_summarize,sentiment_analyzer,extract_keypoints
+from app.services import text_analysis, text_extraction, text_categorization,text_summarize,sentiment_analyzer,extract_keypoints,image_extraction
 
 app = FastAPI()
 
@@ -22,7 +22,7 @@ app.include_router(text_categorization.router, prefix="/api/categorization", tag
 app.include_router(text_summarize.router, prefix="/api/summarize", tags=["categorization"])
 app.include_router(sentiment_analyzer.router, prefix="/api/sentiment", tags=["sentiment"])
 app.include_router(extract_keypoints.router, prefix="/api/extraction", tags=["keywords"])
-
+app.include_router(image_extraction.router, prefix="/api/extraction", tags=["images"])
 
 @app.get("/")
 def home():
