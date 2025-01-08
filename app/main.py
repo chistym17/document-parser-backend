@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
-from app.services import text_analysis, text_extraction, text_categorization,text_summarize,sentiment_analyzer,
-extract_keypoints,image_extraction,link_extraction
+from app.services import text_analysis, text_extraction, text_categorization,text_summarize,sentiment_analyzer,extract_keypoints,image_extraction,link_extraction
 
 app = FastAPI()
 
