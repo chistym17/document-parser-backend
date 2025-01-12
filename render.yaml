@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: document-parser-backend
+    runtime: python
+    buildCommand: pip install -r requirements.prod.txt
+    startCommand: gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5000
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
