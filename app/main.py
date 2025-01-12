@@ -13,9 +13,6 @@ app.add_middleware(
     allow_headers=["*"],  
 )
 
-client = MongoClient('mongodb://localhost:27017/')
-db = client['document']
-
 app.include_router(text_analysis.router, prefix="/api/analysis", tags=["analysis"])
 app.include_router(text_extraction.router, prefix="/api/extraction", tags=["extraction"])
 app.include_router(text_categorization.router, prefix="/api/categorization", tags=["categorization"])
