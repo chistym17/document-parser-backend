@@ -7,3 +7,4 @@ pymongo==4.5.0
 pytesseract==0.3.10
 uvicorn==0.34.0
 gunicorn
+python-multipart
