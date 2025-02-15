@@ -6,6 +6,10 @@ import pytesseract
 from PIL import Image
 from pdf2image import convert_from_path
 
+
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/5/tessdata'
+
 router = APIRouter()
 UPLOAD_FOLDER = 'uploads'
 
